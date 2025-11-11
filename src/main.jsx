@@ -1,10 +1,11 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
+import React from 'react'
+import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
+import './global.css' // <-- PENTING: MENGIMPOR CSS ANDA
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
+// Ini mengambil "wadah" root dari index.html dan me-render App.jsx Anda di dalamnya
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
     <App />
-  </StrictMode>,
+  </React.StrictMode>,
 )

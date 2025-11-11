@@ -1,4 +1,4 @@
-import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { ImageWithFallback } from "./helper";
 import { Button } from "./ui/button";
 
 export function HeroSection() {

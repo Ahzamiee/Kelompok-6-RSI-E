@@ -1,4 +1,4 @@
-import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { ImageWithFallback } from "./helper";
 import { Award } from "lucide-react";
 
 export function AboutSection() {

@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
-import { ImageWithFallback } from "../components/figma/ImageWithFallback";
+import { ImageWithFallback } from "../components/helper";
 import { MapPin, Mountain, Compass, Calendar } from "lucide-react";
 
 export function InformationPage() {

@@ -169,7 +169,7 @@ export function NewsPage() {
                 className={`transition-all ${
                   selectedCategory === category
                     ? "bg-[#10B981] hover:bg-[#059669] text-white shadow-lg"
-                    : "border-2 border-gray-200 hover:border-[#10B981] hover:bg-[#10B981]/5 text-gray-700"
+                    : "border-2 border-gray-200 hover:border-[#10B981] hover:bg-[#10B981] text-gray-700"
                 }`}
               >
                 {category}
@@ -179,7 +179,7 @@ export function NewsPage() {
 
           {/* Results Count */}
           <div className="text-center mt-6">
-            <p className="text-gray-600">
+            <p className="text-black-600">
               Showing <span className="text-gray-900">{filteredNews.length}</span> of <span className="text-gray-900">{allNews.length}</span> news articles
             </p>
           </div>

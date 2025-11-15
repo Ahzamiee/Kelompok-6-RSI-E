@@ -85,9 +85,6 @@ export function NewsSection() {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent"></div>
                       <div className="absolute bottom-3 right-3">
-                        <div className="bg-white/90 backdrop-blur-sm rounded-full p-2 group-hover:bg-white transition-colors">
-                          <ExternalLink className="h-4 w-4 text-gray-900" />
-                        </div>
                       </div>
                     </div>
                     <CardHeader className="flex-shrink-0">

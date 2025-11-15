@@ -1,12 +1,103 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { ImageWithFallback } from "../components/helper";
 import { MapPin, Mountain, Compass, Calendar } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
+const destinationData = [
+  {
+    id: 1,
+    title: "Puncak Rinjani",
+    elevation: "3,726 m",
+    image: "https://images.unsplash.com/photo-1596752765389-75f80d127c5a?q=80&w=1080",
+    shortDescription: "Puncak tertinggi di Pulau Lombok dengan pemandangan spektakuler Danau Segara Anak dan Gunung Barujari.",
+    location: "Lombok Utara & Lombok Timur",
+    route: "Jalur Sembalun, Torean",
+    longDescription: "Mendaki Puncak Rinjani (3.726 mdpl) adalah pencapaian tertinggi di Taman Nasional ini. Perjalanan ke puncak biasanya dimulai dari Plawangan Sembalun pada dini hari. Pendakian ini menantang secara fisik, melewati medan pasir vulkanik yang curam, namun semua terbayar lunas dengan pemandangan matahari terbit yang tak tertandingi di atas awan, dengan bayangan gunung yang menutupi pulau dan Danau Segara Anak yang berkilauan di bawah."
+  },
+  {
+    id: 2,
+    title: "Danau Segara Anak",
+    elevation: "2,008 m",
+    image: "https://images.unsplash.com/photo-1623622863859-2931a6c3bc80?q=80&w=1080",
+    shortDescription: "Danau kawah dengan air biru jernih yang dipercaya memiliki khasiat penyembuhan oleh masyarakat Sasak.",
+    location: "Kawah Gunung Rinjani",
+    route: "Melalui Plawangan Senaru/Sembalun",
+    longDescription: "Segara Anak adalah danau kaldera yang menakjubkan yang terletak di ketinggian 2.008 meter. Danau ini memiliki air berwarna biru kehijauan yang jernih dan dianggap suci oleh masyarakat lokal. Banyak peziarah datang untuk berdoa dan mandi di sumber air panas alami (Aik Kalak) yang ada di dekat danau, yang dipercaya memiliki khasiat penyembuhan. Pemandangan dari tepi danau ke Puncak Rinjani dan Gunung Barujari sangatlah magis."
+  },
+  {
+    id: 3,
+    title: "Gunung Barujari",
+    elevation: "2,376 m",
+    image: "https://images.unsplash.com/photo-1605338166718-32386b48b61e?q=80&w=1080",
+    shortDescription: "Gunung api 'anak' di dalam kawah Rinjani yang masih mengeluarkan asap vulkanik aktif.",
+    location: "Tengah Danau Segara Anak",
+    route: "Via Danau Segara Anak",
+    longDescription: "Gunung Barujari (artinya 'Gunung Baru') adalah kerucut vulkanik aktif yang muncul dari tengah Danau Segara Anak. Gunung ini terbentuk akibat letusan pada tahun 1994. Barujari secara berkala menunjukkan aktivitas vulkanik, mengeluarkan asap dan abu. Keberadaannya menambah dramatisasi lanskap kaldera dan menjadi pengingat nyata akan kekuatan geologi yang terus membentuk Rinjani."
+  },
+  {
+    id: 4,
+    title: "Plawangan Senaru",
+    elevation: "2,641 m",
+    image: "https://images.unsplash.com/photo-1654047624570-3a0c91aadf06?q=80&w=1080",
+    shortDescription: "Titik pandang terbaik untuk melihat sunrise dan panorama Danau Segara Anak dari sisi utara.",
+    location: "Bibir Kawah Rinjani (Utara)",
+    route: "Jalur Senaru",
+    longDescription: "Plawangan Senaru adalah bibir kawah yang dicapai melalui Jalur Senaru. Dari sini, pendaki disuguhi pemandangan pertama yang menakjubkan dari Danau Segara Anak, Gunung Barujari, dan Puncak Rinjani di kejauhan. Ini adalah lokasi berkemah yang populer untuk menyaksikan matahari terbenam dan matahari terbit yang spektakuler sebelum turun ke danau."
+  },
+  {
+    id: 5,
+    title: "Plawangan Sembalun",
+    elevation: "2,639 m",
+    image: "https://images.unsplash.com/photo-1650668300370-3ee2f17d1589?q=80&w=1080",
+    shortDescription: "Area camp utama untuk pendakian ke puncak dengan pemandangan sabana yang menakjubkan.",
+    location: "Bibir Kawah Rinjani (Timur)",
+    route: "Jalur Sembalun",
+    longDescription: "Plawangan Sembalun adalah bibir kawah di sisi timur dan merupakan base camp terakhir sebelum pendakian ke puncak (summit attack). Terletak di atas sabana yang luas, tempat ini menawarkan pemandangan yang sangat berbeda dari Jalur Senaru. Pendaki biasanya tiba di sini pada sore hari, beristirahat beberapa jam, dan memulai pendakian puncak sekitar jam 2 pagi."
+  },
+  {
+    id: 6,
+    title: "Air Terjun Senaru",
+    elevation: "600 m",
+    image: "https://images.unsplash.com/photo-1552409949-550ff3439e6a?q=80&w=1080",
+    shortDescription: "Air terjun spektakuler dengan ketinggian 600 meter di kaki Gunung Rinjani.",
+    location: "Desa Senaru",
+    route: "Trekking 30 menit",
+    longDescription: "Terletak di kaki Gunung Rinjani dekat Desa Senaru, air terjun ini adalah salah satu yang paling terkenal di Lombok. Ada dua air terjun di lokasi ini: Sendang Gile dan Tiu Kelep. Tiu Kelep, yang paling mengesankan, mengharuskan trekking singkat melalui hutan dan menyeberangi sungai. Airnya yang deras dan kolam alaminya yang menyegarkan menjadikannya tempat yang sempurna untuk bersantai setelah pendakian."
+  },
+  {
+    id: 7,
+    title: "Savana Sembalun",
+    elevation: "1,150 m",
+    image: "https://images.unsplash.com/photo-1671525178137-14bd5d867cdc?q=80&w=1080",
+    shortDescription: "Padang sabana luas dengan pemandangan perbukitan hijau yang memukau.",
+    location: "Desa Sembalun Lawang",
+    route: "Jalur Sembalun",
+    longDescription: "Jalur pendakian Sembalun dimulai dengan pemandangan padang sabana yang luas dan terbuka. Dikelilingi oleh perbukitan hijau yang menjulang, termasuk Bukit Pergasingan, area ini menawarkan pemandangan yang sangat berbeda dari hutan lebat di Jalur Senaru. Padang sabana ini sering digunakan oleh ternak warga lokal dan memberikan pemanasan yang landai sebelum tanjakan curam dimulai."
+  },
+  {
+    id: 8,
+    title: "Desa Torean",
+    elevation: "1,050 m",
+    image: "https://images.unsplash.com/photo-1647492193738-518f0803c518?q=80&w=1080",
+    shortDescription: "Desa tradisional Sasak dengan jalur pendakian alternatif yang menantang.",
+    location: "Lombok Timur",
+    route: "Jalur Torean",
+    longDescription: "Jalur Torean adalah rute pendakian yang lebih baru dan menantang, sering digunakan oleh peziarah lokal. Jalur ini menawarkan pemandangan yang dramatis karena menyusuri lembah sungai yang dalam dan curam, dengan pemandangan langsung ke air terjun dan formasi batuan vulkanik. Desa Torean sendiri adalah desa tradisional Sasak yang otentik di mana pendaki dapat melihat kehidupan lokal sebelum memulai pendakian."
+  }
+];
 
 export function InformationPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative h-[400px] bg-gradient-to-r from-[#10B981] to-[#059669]">
+      <section className="relative h-[600px] bg-gradient-to-r from-[#10B981] to-[#059669]">
         <div className="absolute inset-0">
           <ImageWithFallback
             src="https://images.unsplash.com/photo-1671525178137-14bd5d867cdc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb3VudGFpbiUyMGxhbmRzY2FwZSUyMGluZG9uZXNpYXxlbnwxfHx8fDE3NjEwMzg5NDd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
@@ -107,6 +198,98 @@ export function InformationPage() {
               </CardContent>
             </Card>
           </div>
+
+          <div className="mb-16">
+            {/* Section Header */}
+            <div className="bg-gradient-to-r from-[#10B981] to-[#059669] rounded-2xl p-8 mb-8 shadow-xl text-center">
+              <h2 className="text-white mb-2">Destinasi Utama</h2>
+              <p className="text-white/90">
+                Jelajahi keindahan alam Taman Nasional Gunung Rinjani
+              </p>
+            </div>
+
+            {/* Grid Destinasi - Sesuai gambar, kita pakai 2 kolom */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {destinationData.map((dest) => (
+                <Dialog key={dest.id}>
+                  <DialogTrigger asChild>
+                    <Card className="h-full flex flex-col overflow-hidden hover:shadow-2xl transition-all group border-2 border-gray-200 hover:border-[#10B981] hover:translate-y-[-4px] bg-white cursor-pointer">
+                      <div className="relative h-56 overflow-hidden flex-shrink-0">
+                        <ImageWithFallback
+                          src={dest.image}
+                          alt={dest.title}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/70 to-transparent"></div>
+                        <div className="absolute top-3 right-3">
+                          <span className="bg-[#10B981] text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg">
+                            {dest.elevation}
+                          </span>
+                        </div>
+                      </div>
+                      <CardHeader className="flex-shrink-0">
+                        <CardTitle className="text-gray-900 group-hover:text-[#10B981] transition-colors">
+                          {dest.title}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="flex-grow flex flex-col">
+                        <CardDescription className="text-gray-600 mb-4 flex-grow">
+                          {dest.shortDescription}
+                        </CardDescription>
+                        <div className="text-sm text-gray-500 border-t-2 border-gray-100 pt-3 space-y-2">
+                          <div className="flex items-center gap-2">
+                            <MapPin className="h-4 w-4 text-[#059669] flex-shrink-0" />
+                            <span>{dest.location}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Compass className="h-4 w-4 text-[#059669] flex-shrink-0" />
+                            <span>{dest.route}</span>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </DialogTrigger>
+                  
+                  {/* --- KONTEN DIALOG (POPUP) --- */}
+                  <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-white">
+                    <DialogHeader>
+                      <div className="relative h-72 -mx-6 -mt-6 mb-6 overflow-hidden rounded-t-lg">
+                        <ImageWithFallback
+                          src={dest.image}
+                          alt={dest.title}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
+                        <div className="absolute bottom-6 left-6">
+                           <span className="bg-[#10B981] text-white text-sm font-semibold px-4 py-2 rounded-full shadow-lg">
+                            {dest.elevation}
+                          </span>
+                        </div>
+                      </div>
+                      <DialogTitle className="text-gray-900 text-3xl mb-2">{dest.title}</DialogTitle>
+                      <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-gray-500 pt-2 pb-4 border-b-2 border-gray-100">
+                        <div className="flex items-center gap-2">
+                          <MapPin className="h-4 w-4 text-[#059669]" />
+                          <span>{dest.location}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Compass className="h-4 w-4 text-[#059669]" />
+                          <span>{dest.route}</span>
+                        </div>
+                      </div>
+                    </DialogHeader>
+                    <div className="mt-4">
+                      <div className="prose prose-gray max-w-none text-gray-700 leading-relaxed">
+                        <p>{dest.longDescription}</p>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              ))}
+            </div>
+          </div>
+
+
           <div className="mb-16">
             {/* Section Header */}
             <div className="bg-gradient-to-r from-[#059669] to-[#047857] rounded-2xl p-8 mb-8 shadow-xl text-center">

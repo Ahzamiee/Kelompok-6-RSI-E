@@ -130,7 +130,7 @@ export function NewsPage() {
 
   return (
     <div className="min-h-screen bg-white">
-           <section className="relative h-[400px] bg-gradient-to-r from-[#10B981] to-[#059669]">
+           <section className="relative h-[600px] bg-gradient-to-r from-[#10B981] to-[#059669]">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900/20"></div>
         <div className="relative h-full flex items-center justify-center px-4">
           <div className="text-center text-white">

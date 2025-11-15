@@ -8,8 +8,7 @@ import { RegulationPage } from "./pages/RegulationPage";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('home');
-
-  // Scroll to top when page changes
+  
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPage]);
@@ -17,7 +16,7 @@ export default function App() {
   const renderPage = () => {
     switch (currentPage) {
       case 'home':
-        return <HomePage />;
+        return <HomePage onNavigate={setCurrentPage} />;
       case 'information':
         return <InformationPage />;
       case 'news':
@@ -25,16 +24,19 @@ export default function App() {
       case 'regulation':
         return <RegulationPage />;
       default:
-        return <HomePage />;
+        return <HomePage onNavigate={setCurrentPage} />;
     }
   };
 
   return (
     <div className="min-h-screen">
       <Navbar currentPage={currentPage} onNavigate={setCurrentPage} />
+      
+      {/* PASTIKAN TIDAK ADA 'pt-16' DI SINI */}
       <main>
         {renderPage()}
       </main>
+      
       <Footer />
     </div>
   );

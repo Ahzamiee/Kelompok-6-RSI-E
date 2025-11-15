@@ -17,6 +17,7 @@ export function Navbar({ currentPage, onNavigate }) {
             onClick={() => handleNavigation('home')}
             className="flex items-center gap-3 hover:opacity-80 transition-opacity"
           >
+            {/* --- Teks dan Ikon kembali jadi PUTIH --- */}
             <Mountain className="h-8 w-8 text-white" />
             <span className="text-white tracking-wide">RINJA</span>
           </button>
@@ -64,7 +65,7 @@ export function Navbar({ currentPage, onNavigate }) {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu (Ini sudah benar, biarkan saja) */}
       {mobileMenuOpen && (
         <div className="md:hidden bg-white border-t border-gray-200 shadow-lg">
           <div className="px-4 py-4 space-y-3">
